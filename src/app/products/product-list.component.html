@@ -38,7 +38,8 @@
                         <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
                         <td>{{product.releaseDate}}</td>
                         <td>{{product.price | currency:'USD':'symbol':'1.2-2'}}</td>
-                        <td>{{product.starRating}}</td>
+                        <!-- binding propertry to be passed in nested component -->
+                        <td class="text-center"><pm-star [rating]="product.starRating" (ratingClicked)="onRatingClicked($event)"></pm-star></td>
                     </tr>
                 </tbody>
             </table>
