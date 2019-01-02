@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit{
     imageWidth: number = 35;
     showImage: boolean = false;
     filteredProducts: IProduct[];
+    errorMessage:string;
     constructor(private productService: ProductService){ }
     // "_" is to make the property private 
     _listFilter: string;
@@ -27,8 +28,13 @@ export class ProductListComponent implements OnInit{
     }
     products: IProduct[] = []
     ngOnInit():void{
-        this.products = this.productService.getProduct();
-        this.filteredProducts = this.products;
+        this.productService.getProduct().subscribe(
+            products => {
+                this.products = products;
+                this.filteredProducts = this.products;
+            }
+        ),
+        error => this.errorMessage = error as any // type casting/assertion with "<>" or with "as", to predict that the returned data should be of type "any"
     }
     performFilter(filterBy: string):IProduct[]{
         filterBy = filterBy.toLocaleLowerCase();
